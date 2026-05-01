@@ -1,0 +1,13 @@
+{
+  "name": "bark-notify-skill",
+  "owner": {
+    "name": "liaokongrui"
+  },
+  "plugins": [
+    {
+      "name": "bark-notify-skill",
+      "source": "./",
+      "description": "Set up Bark completion notifications for Claude Code on macOS."
+    }
+  ]
+}

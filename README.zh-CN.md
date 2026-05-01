@@ -24,28 +24,20 @@ Claude Code 的 Bark 推送通知插件。当 Claude Code 在 macOS 上完成一
 - **标题**：当前项目名称
 - **正文**：`Claude Code 已完成`
 
-简洁格式，多个 Claude Code 窗口同时运行时容易识别。
-
 ## 安装方式
 
-不需要克隆仓库。在 Claude Code 会话内执行两条命令即可：
+在 Claude Code 会话内执行：
 
 ```bash
 /plugin marketplace add RUIIIOVO/bark-notify-skill
 /plugin install bark-notify-skill@bark-notify-skill
 ```
 
-或使用命令行：
-
-```bash
-claude plugin install bark-notify-skill@RUIIIOVO-bark-notify-skill
-```
-
-安装完成后，所有 Claude Code 会话均可使用。
+执行 `/reload-plugins` 激活。
 
 ## 快速开始
 
-安装插件后，在 Claude Code 中执行：
+安装后执行：
 
 ```
 /bark-notify-skill:bark-notify-setup
@@ -76,6 +68,7 @@ Setup 流程确认后写入两个文件：
 ```text
 bark-notify-skill/
 ├── .claude-plugin/
+│   ├── marketplace.json
 │   └── plugin.json
 ├── skills/
 │   ├── bark-notify/
@@ -96,15 +89,11 @@ bark-notify-skill/
 
 ## 本地开发
 
-如需本地开发或测试此插件：
-
 ```bash
 git clone https://github.com/RUIIIOVO/bark-notify-skill.git
 cd bark-notify-skill
 claude --plugin-dir .
 ```
-
-仅当前会话生效。修改后执行 `/reload-plugins` 热重载。
 
 ## 许可证
 

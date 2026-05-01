@@ -24,28 +24,20 @@ A Claude Code plugin that sends a Bark push notification to your iPhone when Cla
 - **Title**: current project name
 - **Body**: `Claude Code 已完成`
 
-This minimal format is easy to identify when multiple Claude Code windows are open.
-
 ## Installation
 
-No need to clone this repo. Just run two commands inside a Claude Code session:
+Run these two commands in a Claude Code session:
 
 ```bash
 /plugin marketplace add RUIIIOVO/bark-notify-skill
 /plugin install bark-notify-skill@bark-notify-skill
 ```
 
-Or from the command line:
-
-```bash
-claude plugin install bark-notify-skill@RUIIIOVO-bark-notify-skill
-```
-
-That's it. The plugin is now available in all your Claude Code sessions.
+Then `/reload-plugins` to activate.
 
 ## Quick start
 
-After installing the plugin, run in Claude Code:
+After installation, run:
 
 ```
 /bark-notify-skill:bark-notify-setup
@@ -76,6 +68,7 @@ The setup flow writes two local files (after confirmation):
 ```text
 bark-notify-skill/
 ├── .claude-plugin/
+│   ├── marketplace.json
 │   └── plugin.json
 ├── skills/
 │   ├── bark-notify/
@@ -96,15 +89,11 @@ bark-notify-skill/
 
 ## Local development
 
-To develop or test this plugin locally:
-
 ```bash
 git clone https://github.com/RUIIIOVO/bark-notify-skill.git
 cd bark-notify-skill
 claude --plugin-dir .
 ```
-
-Only active for the current session. Use `/reload-plugins` to pick up changes without restarting.
 
 ## License
 

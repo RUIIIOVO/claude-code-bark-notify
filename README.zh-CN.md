@@ -1,15 +1,19 @@
 [English](README.md) | [中文](README.zh-CN.md)
 
-# bark-notify-skill
+# bark-notify
 
 一个 Claude Code 插件，通过 [Bark](https://github.com/Finb/Bark) 把 macOS 上的完成、出错、等待授权等事件推送到 iPhone。
 
-## 你为什么会想用
+## 我为什么做这个插件
 
-- Claude 30 秒就跑完了，你 12 分钟后才回过神。
-- 你出去倒杯水回来，发现 Claude 在等你点确认已经站岗 5 分钟。
-- 你的终端在 tmux 里，手机在另一个房间——推送照样能到。
-- 合上电脑离开桌子。推送照样到。
+- `vibe coding`，尤其是多个项目并行的时候，很容易隔一会儿就需要回头看一眼终端：Claude 到底跑完了没有，是出错了，还是卡在等我确认。
+- 在公司里不方便开声音提醒；一边看手机、一边并行做别的事，又总会被“要不要回终端看一眼”这件事反复打断，很烦。
+- Claude 官方也有移动端消息通知的功能，但更偏向 `Cowork` / `Dispatch` / `Remote Control` 这套体验：要装 Claude 手机 App、打开通知、保持连接可用，在中国国内必须使用魔法不然容易封号，同时开着魔法摸鱼带来的网络延迟也会让人很不爽。
+- 如果你主要用的是 `Claude Code CLI`，官方给到的可定制能力目前主要还是 `hooks`；官方的手机推送能力更多在 `Remote Control` / `Dispatch` 这条链路上，不是纯 CLI 默认自带的一条轻量通知路径。
+- 市面上当然也有别的办法，比如接飞书、钉钉机器人，或者走 `iMessage`、邮箱，但不是配置重、权限多，就是过于依赖特定平台，不太适合这种高频提醒。
+- 另外，如果你平时会用 `ccswitch` 切模型，官方桌面端那条路也不一定顺手。我自己现在是 `ccswitch` + 豆包语音输入法 + 这个插件，`vibe coding` 的体验会顺很多。
+- 所以我做了这个插件：用 Bark 把“该提醒我的时候提醒我”这件事单独做好。它配置简单，App 装好后不用额外注册，自动生成 key，把 URL 交给 Claude 就能很快配好。
+- 如果你在意隐私，也可以直接开加密，或者把 Bark 部署到自己的服务器上；至少在“提醒”这一层，不需要再额外绕一遍企业 IM 或别的第三方通知链路。
 
 ## 前置条件
 
@@ -21,15 +25,15 @@
 在任意 Claude Code 会话中执行：
 
 ```text
-/plugin marketplace add RUIIIOVO/bark-notify-skill
-/plugin install bark-notify-skill@bark-notify-skill
+/plugin marketplace add RUIIIOVO/claude-code-bark-notify
+/plugin install bark-notify@bark-notify
 /reload-plugins
 ```
 
 ## 配置
 
 ```text
-/bark-notify-skill:bark-notify-setup
+/bark-notify:bark-notify-setup
 ```
 
 会依次问你：
@@ -41,7 +45,7 @@
 验证：
 
 ```text
-/bark-notify-skill:bark-notify-test
+/bark-notify:bark-notify-test
 ```
 
 ## 推送内容
@@ -69,14 +73,14 @@ tmux set -g visual-bell on
 ## 卸载
 
 ```text
-/bark-notify-skill:bark-notify-uninstall
+/bark-notify:bark-notify-uninstall
 ```
 
 会移除 `~/.claude/settings.json` 里的 Bark hook，并删除本地脚本。
 
 ## 排错
 
-在任意 Claude Code 会话里直接问 —— `bark-notify` skill 会引导你。也可以重新跑 setup 覆盖配置。
+在任意 Claude Code 会话里直接问 —— `bark-notify` 插件内置了引导用的 skill，也可以重新跑 setup 覆盖配置。
 
 ## 隐私
 
@@ -92,8 +96,8 @@ tmux set -g visual-bell on
 <summary>本地开发</summary>
 
 ```bash
-git clone https://github.com/RUIIIOVO/bark-notify-skill.git
-cd bark-notify-skill
+git clone https://github.com/RUIIIOVO/claude-code-bark-notify.git
+cd claude-code-bark-notify
 claude --plugin-dir .
 ```
 
@@ -102,9 +106,9 @@ Skills：
 | Skill | 触发方式 | 用途 |
 |-------|---------|------|
 | `bark-notify` | 自动（模型调用） | 引导、决策与排错 |
-| `bark-notify-setup` | `/bark-notify-skill:bark-notify-setup` | 交互式配置 |
-| `bark-notify-test` | `/bark-notify-skill:bark-notify-test` | 发送验证通知 |
-| `bark-notify-uninstall` | `/bark-notify-skill:bark-notify-uninstall` | 卸载 hook 与脚本 |
+| `bark-notify-setup` | `/bark-notify:bark-notify-setup` | 交互式配置 |
+| `bark-notify-test` | `/bark-notify:bark-notify-test` | 发送验证通知 |
+| `bark-notify-uninstall` | `/bark-notify:bark-notify-uninstall` | 卸载 hook 与脚本 |
 
 </details>
 

@@ -1,15 +1,19 @@
 [English](README.md) | [中文](README.zh-CN.md)
 
-# bark-notify-skill
+# bark-notify
 
 A Claude Code plugin that pushes a notification to your iPhone via [Bark](https://github.com/Finb/Bark) when Claude Code finishes a turn, errors out, or asks for your approval.
 
-## Why you'd want this
+## Why I built this
 
-- Claude finished in 30 seconds. You noticed 12 minutes later.
-- You went to make coffee. Claude has been silently waiting on your approval the whole time.
-- Your terminal is in tmux, your phone is across the room — and you'd still like the push to arrive.
-- You closed the lid and walked away. The push lands anyway.
+- In `vibe coding`, especially when juggling multiple projects, I often need to glance back at the terminal just to see whether Claude is done, has failed, or is stuck waiting for my approval.
+- In an office, sound alerts are not always practical. And when you're looking at your phone while doing something else in parallel, that repeated “should I check the terminal again?” interruption gets annoying fast.
+- Claude does have an official mobile notification path, but it is more aligned with the `Cowork` / `Dispatch` / `Remote Control` experience: install the Claude mobile app, enable notifications, keep the connection healthy, and in mainland China that usually also means keeping a VPN on all the time. If you're casually multitasking on your phone, that extra network friction gets annoying too.
+- If you mainly use `Claude Code CLI`, the official customization surface is still mostly `hooks`; the official phone-push experience lives more in `Remote Control` / `Dispatch`, not as a lightweight phone notification path built into plain CLI usage.
+- There are other workarounds too — Feishu or DingTalk bots, `iMessage`, email — but they are either heavy on setup, permission-gated, or too tied to one platform for this kind of frequent reminder.
+- If you also use `ccswitch` to swap models, the desktop-first route is not always the smoothest fit. My own setup is `ccswitch` + Doubao voice input + this plugin, and the overall `vibe coding` loop feels much better.
+- So I built this plugin to do one thing well: notify me when Claude is actually done or needs me. Bark is simple to set up, does not require an extra account, generates a key for you, and becomes usable as soon as you hand the URL to Claude.
+- If privacy matters, you can turn on encryption or self-host Bark. At least for the notification layer, you do not have to route everything through a work chat tool or another third-party notification chain.
 
 ## Requirements
 
@@ -21,15 +25,15 @@ A Claude Code plugin that pushes a notification to your iPhone via [Bark](https:
 In any Claude Code session:
 
 ```text
-/plugin marketplace add RUIIIOVO/bark-notify-skill
-/plugin install bark-notify-skill@bark-notify-skill
+/plugin marketplace add RUIIIOVO/claude-code-bark-notify
+/plugin install bark-notify@bark-notify
 /reload-plugins
 ```
 
 ## Configure
 
 ```text
-/bark-notify-skill:bark-notify-setup
+/bark-notify:bark-notify-setup
 ```
 
 You will be asked for:
@@ -41,7 +45,7 @@ You will be asked for:
 Verify:
 
 ```text
-/bark-notify-skill:bark-notify-test
+/bark-notify:bark-notify-test
 ```
 
 ## Notifications
@@ -69,14 +73,14 @@ tmux set -g visual-bell on
 ## Uninstall
 
 ```text
-/bark-notify-skill:bark-notify-uninstall
+/bark-notify:bark-notify-uninstall
 ```
 
 Removes the Bark hooks from `~/.claude/settings.json` and deletes the local script.
 
 ## Troubleshooting
 
-Ask Claude in any session — the `bark-notify` skill will guide you. Or re-run setup to reconfigure.
+Ask Claude in any session — the `bark-notify` plugin includes a guidance skill for setup and troubleshooting. Or re-run setup to reconfigure.
 
 ## Privacy
 
@@ -92,8 +96,8 @@ Ask Claude in any session — the `bark-notify` skill will guide you. Or re-run 
 <summary>Local development</summary>
 
 ```bash
-git clone https://github.com/RUIIIOVO/bark-notify-skill.git
-cd bark-notify-skill
+git clone https://github.com/RUIIIOVO/claude-code-bark-notify.git
+cd claude-code-bark-notify
 claude --plugin-dir .
 ```
 
@@ -102,9 +106,9 @@ Skills:
 | Skill | Trigger | Purpose |
 |-------|---------|---------|
 | `bark-notify` | Auto (model-invoked) | Guidance, setup decisions, troubleshooting |
-| `bark-notify-setup` | `/bark-notify-skill:bark-notify-setup` | Interactive setup |
-| `bark-notify-test` | `/bark-notify-skill:bark-notify-test` | Verification notification |
-| `bark-notify-uninstall` | `/bark-notify-skill:bark-notify-uninstall` | Removes hook and script |
+| `bark-notify-setup` | `/bark-notify:bark-notify-setup` | Interactive setup |
+| `bark-notify-test` | `/bark-notify:bark-notify-test` | Verification notification |
+| `bark-notify-uninstall` | `/bark-notify:bark-notify-uninstall` | Removes hook and script |
 
 </details>
 

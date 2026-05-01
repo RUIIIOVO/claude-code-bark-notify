@@ -14,7 +14,7 @@ Merge this structure into `~/.claude/settings.json`:
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/bash /Users/<user>/.claude/claude-stop-bark.sh",
+            "command": "/bin/bash ~/.claude/claude-stop-bark.sh",
             "async": true
           }
         ]
@@ -25,7 +25,7 @@ Merge this structure into `~/.claude/settings.json`:
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/bash /Users/<user>/.claude/claude-stop-bark.sh",
+            "command": "/bin/bash ~/.claude/claude-stop-bark.sh",
             "async": true
           }
         ]
@@ -36,7 +36,7 @@ Merge this structure into `~/.claude/settings.json`:
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/bash /Users/<user>/.claude/claude-stop-bark.sh",
+            "command": "/bin/bash ~/.claude/claude-stop-bark.sh",
             "async": true
           }
         ]
@@ -47,7 +47,7 @@ Merge this structure into `~/.claude/settings.json`:
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/bash /Users/<user>/.claude/claude-stop-bark.sh",
+            "command": "/bin/bash ~/.claude/claude-stop-bark.sh",
             "async": true
           }
         ]

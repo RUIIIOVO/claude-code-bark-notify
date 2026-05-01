@@ -20,8 +20,8 @@ This skill helps users set up or troubleshoot Bark notifications for Claude Code
 Prefer the lightest path that matches the user's intent.
 
 - If the user wants explanation only, guide them.
-- If the user wants direct setup, route them to `/bark-notify-skill:bark-notify-setup`.
-- If the user wants to verify delivery, route them to `/bark-notify-skill:bark-notify-test`.
+- If the user wants direct setup, route them to `/bark-notify:bark-notify-setup`.
+- If the user wants to verify delivery, route them to `/bark-notify:bark-notify-test`.
 
 ## Scope
 

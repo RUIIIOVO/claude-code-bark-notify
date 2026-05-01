@@ -38,6 +38,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Skills: `bark-notify` (auto-invoked guidance), `bark-notify-setup`, `bark-notify-test`, `bark-notify-uninstall`.
 - Terminal bell (`printf '\a'`) after each notification for tmux pane-activity detection.
 
-[Unreleased]: https://github.com/RUIIIOVO/bark-notify-skill/compare/v0.2.0...HEAD
-[0.2.0]: https://github.com/RUIIIOVO/bark-notify-skill/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/RUIIIOVO/bark-notify-skill/releases/tag/v0.1.0
+[Unreleased]: https://github.com/RUIIIOVO/claude-code-bark-notify/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/RUIIIOVO/claude-code-bark-notify/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/RUIIIOVO/claude-code-bark-notify/releases/tag/v0.1.0

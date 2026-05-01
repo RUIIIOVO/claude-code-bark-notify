@@ -26,7 +26,7 @@ After setup, the local machine should contain:
 2. Inspect current Claude config before writing.
    - Read `~/.claude/settings.json` if it exists.
    - Never overwrite unrelated settings.
-   - Merge in the `Stop`, `StopFailure`, and `SessionEnd` hooks safely.
+   - Merge in the `Stop`, `StopFailure`, `SessionEnd`, and `Notification` hooks safely.
 
 3. Use the config templates from `../bark-notify/references/config-patterns.md`.
    - Write a small shell script to `~/.claude/claude-stop-bark.sh`.
@@ -50,7 +50,7 @@ After setup, the local machine should contain:
    - Ensure the script is executable.
    - Confirm all four hook commands (`Stop`, `StopFailure`, `SessionEnd`, `Notification`) point to `/bin/bash ~/.claude/claude-stop-bark.sh`.
    - Smoke-test by piping each event payload (`Stop`, `Notification`, `StopFailure`, `SessionEnd`+`reason=logout`, `SessionEnd`+`reason=other`) through the script and confirm the logout case exits without sending.
-   - If the user wants, immediately hand off to `/bark-notify-skill:bark-notify-test`.
+   - If the user wants, immediately hand off to `/bark-notify:bark-notify-test`.
 
 ## Safety rules
 

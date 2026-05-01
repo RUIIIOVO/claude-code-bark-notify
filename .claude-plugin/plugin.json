@@ -1,7 +1,7 @@
 {
-  "name": "bark-notify-skill",
-  "description": "Set up Bark completion notifications for Claude Code on macOS. Use this plugin whenever the user wants Claude Code on a Mac to notify an iPhone through Bark when a task or turn finishes, whether they want guided setup, direct configuration, testing, or troubleshooting.",
-  "version": "0.1.0",
+  "name": "bark-notify",
+  "description": "Claude Code plugin for Bark-powered iPhone notifications on macOS. Use it when Claude Code on a Mac should notify an iPhone through Bark when a task or turn finishes, whether the user wants guided setup, direct configuration, testing, or troubleshooting.",
+  "version": "0.2.0",
   "author": {
     "name": "liaokongrui"
   },

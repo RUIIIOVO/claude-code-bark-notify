@@ -8,7 +8,7 @@ A Claude Code plugin that pushes a notification to your iPhone via [Bark](https:
 
 - Claude finished in 30 seconds. You noticed 12 minutes later.
 - You went to make coffee. Claude has been silently waiting on your approval the whole time.
-- Your terminal is in tmux, your tmux is on a remote box, your phone is across the room — and you'd still like to know.
+- Your terminal is in tmux, your phone is across the room — and you'd still like the push to arrive.
 - You closed the lid and walked away. The push lands anyway.
 
 ## Requirements

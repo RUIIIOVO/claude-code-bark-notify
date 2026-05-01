@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-05-02
+
+### Added
+- Chinese changelog at `CHANGELOG.zh-CN.md`.
+
+### Changed
+- Plugin package name is now `bark-notify` instead of `bark-notify-skill`.
+- Marketplace install path is now `RUIIIOVO/claude-code-bark-notify`.
+- Slash-command examples now use the `bark-notify` plugin namespace.
+- README and setup references now consistently describe the plugin as `bark-notify`.
+
+### Notes
+- Existing users of `bark-notify-skill` should uninstall the old plugin and reinstall `bark-notify`.
+
 ## [0.2.0] - 2026-05-01
 
 ### Added
@@ -38,6 +52,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Skills: `bark-notify` (auto-invoked guidance), `bark-notify-setup`, `bark-notify-test`, `bark-notify-uninstall`.
 - Terminal bell (`printf '\a'`) after each notification for tmux pane-activity detection.
 
-[Unreleased]: https://github.com/RUIIIOVO/claude-code-bark-notify/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/RUIIIOVO/claude-code-bark-notify/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/RUIIIOVO/claude-code-bark-notify/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/RUIIIOVO/claude-code-bark-notify/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/RUIIIOVO/claude-code-bark-notify/releases/tag/v0.1.0

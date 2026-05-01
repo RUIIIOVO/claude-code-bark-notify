@@ -114,7 +114,7 @@ Skills：
 
 ## 更新日志
 
-见 [CHANGELOG.md](CHANGELOG.md)。
+英文版见 [CHANGELOG.md](CHANGELOG.md)，中文版见 [CHANGELOG.zh-CN.md](CHANGELOG.zh-CN.md)。
 
 ## 许可证
 

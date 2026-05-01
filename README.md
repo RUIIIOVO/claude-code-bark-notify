@@ -114,7 +114,7 @@ Skills:
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md).
+See [CHANGELOG.md](CHANGELOG.md) or [CHANGELOG.zh-CN.md](CHANGELOG.zh-CN.md).
 
 ## License
 

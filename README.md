@@ -4,6 +4,13 @@
 
 A Claude Code plugin that pushes a notification to your iPhone via [Bark](https://github.com/Finb/Bark) when Claude Code finishes a turn, errors out, or asks for your approval.
 
+## Why you'd want this
+
+- Claude finished in 30 seconds. You noticed 12 minutes later.
+- You went to make coffee. Claude has been silently waiting on your approval the whole time.
+- Your terminal is in tmux, your tmux is on a remote box, your phone is across the room — and you'd still like to know.
+- You closed the lid and walked away. The push lands anyway.
+
 ## Requirements
 
 - macOS with Claude Code installed

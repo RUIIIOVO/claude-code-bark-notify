@@ -4,6 +4,13 @@
 
 一个 Claude Code 插件，通过 [Bark](https://github.com/Finb/Bark) 把 macOS 上的完成、出错、等待授权等事件推送到 iPhone。
 
+## 你为什么会想用
+
+- Claude 30 秒就跑完了，你 12 分钟后才回过神。
+- 你出去倒杯水回来，发现 Claude 在等你点确认已经站岗 5 分钟。
+- 你的终端在 tmux 里，tmux 在远程服务器上，手机还在另一个房间——它都管得到。
+- 合上电脑离开桌子。推送照样到。
+
 ## 前置条件
 
 - macOS 装好 Claude Code

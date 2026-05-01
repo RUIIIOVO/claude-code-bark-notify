@@ -30,7 +30,10 @@ Claude Code 的 Bark 推送通知插件。当 Claude Code 在 macOS 上完成一
 在 Claude Code 会话内执行：
 
 ```bash
+# 第一步：将此仓库注册为插件市场
 /plugin marketplace add RUIIIOVO/bark-notify-skill
+
+# 第二步：从该市场安装插件
 /plugin install bark-notify-skill@bark-notify-skill
 ```
 

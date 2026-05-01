@@ -30,7 +30,10 @@ A Claude Code plugin that sends a Bark push notification to your iPhone when Cla
 Run these two commands in a Claude Code session:
 
 ```bash
+# Step 1: Register this repo as a plugin marketplace
 /plugin marketplace add RUIIIOVO/bark-notify-skill
+
+# Step 2: Install the plugin from that marketplace
 /plugin install bark-notify-skill@bark-notify-skill
 ```
 

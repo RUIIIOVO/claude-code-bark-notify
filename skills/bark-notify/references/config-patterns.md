@@ -1,8 +1,22 @@
 # Config patterns
 
-This reference contains the supported Bark hook patterns.
+This reference contains the supported Bark hook patterns for macOS/Linux and Windows.
 
-## Stop hook shape
+## Platform detection
+
+Before writing any files, detect the current OS:
+
+- Run `uname -s 2>/dev/null` (bash) or check `$env:OS` (PowerShell).
+- If the result is `Windows_NT`, or the working directory path starts with a drive letter (`C:\`, `D:\`, etc.), use the **Windows** path below.
+- Otherwise use the **macOS/Linux** path.
+
+---
+
+## macOS / Linux — hook shape
+
+Script path: `~/.claude/claude-stop-bark.sh`
+
+Hook command: `/bin/bash ~/.claude/claude-stop-bark.sh`
 
 Merge this structure into `~/.claude/settings.json`:
 
@@ -59,6 +73,75 @@ Merge this structure into `~/.claude/settings.json`:
 
 Always merge instead of replacing unrelated config.
 
+---
+
+## Windows — hook shape
+
+Script path: `%USERPROFILE%\.claude\claude-stop-bark.ps1`
+
+Resolve the **absolute path** at setup time (e.g. `C:\Users\Alice\.claude\claude-stop-bark.ps1`) and embed it literally in the hook command. Do not use `%USERPROFILE%` as a variable in the JSON — resolve it first.
+
+Hook command (replace the path with the actual absolute path):
+
+```
+powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File "C:\Users\<username>\.claude\claude-stop-bark.ps1"
+```
+
+Merge this structure into `%USERPROFILE%\.claude\settings.json` (same file as `~/.claude/settings.json`):
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File \"C:\\Users\\<username>\\.claude\\claude-stop-bark.ps1\"",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File \"C:\\Users\\<username>\\.claude\\claude-stop-bark.ps1\"",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File \"C:\\Users\\<username>\\.claude\\claude-stop-bark.ps1\"",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File \"C:\\Users\\<username>\\.claude\\claude-stop-bark.ps1\"",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Always merge instead of replacing unrelated config.
+
 ## Event types
 
 The script must differentiate notifications so the user can tell at a glance what happened. Read `hook_event_name` and `reason` from the JSON payload on **stdin** (not from any environment variable — Claude Code does not set `HOOK_EVENT`).
@@ -82,7 +165,7 @@ Do not set the `sound` field. The body emoji + Bark's `level` already differenti
 
 The last row matters: when the user explicitly closes the CLI, runs `/clear`, or `/logout`, the script must `exit 0` before doing any work. Otherwise every CLI close fires a stale "completed" push.
 
-## Plain Bark script pattern
+## Plain Bark script pattern (macOS/Linux — bash)
 
 Plain mode uses the Bark push URL directly and sends readable title/body content.
 
@@ -96,7 +179,77 @@ Script responsibilities:
 - omit the `sound` field (no audio cue requested)
 - omit the `icon` field — Bark's default icon is fine and any external URL (e.g. `claude.ai/images/...`) is gated behind Cloudflare human verification, which Bark's image fetch cannot pass
 
-## Encrypted Bark script pattern
+## Plain Bark script pattern (Windows — PowerShell)
+
+Use this template when generating `claude-stop-bark.ps1` on Windows.
+
+Key differences from the bash version:
+- Read stdin with `[System.IO.StreamReader]::new([Console]::OpenStandardInput(), [Text.Encoding]::UTF8)` — this handles the UTF-8 JSON payload correctly regardless of the system's console code page.
+- Parse JSON with PowerShell's native `ConvertFrom-Json` — no `python3` dependency.
+- Send HTTP with `Invoke-RestMethod` — no `curl` dependency.
+- Build emoji with `[char]::ConvertFromUtf32()` — avoids PS1 file encoding issues; the values are constructed at runtime.
+- Terminal bell: `[Console]::Write([char]7)` (equivalent to bash `printf '\a'`).
+- No `chmod` needed — `.ps1` files do not need executable bits.
+
+```powershell
+$reader = [System.IO.StreamReader]::new([Console]::OpenStandardInput(), [Text.Encoding]::UTF8)
+$payloadRaw = $reader.ReadToEnd()
+if ([string]::IsNullOrWhiteSpace($payloadRaw)) { exit 0 }
+try { $d = $payloadRaw | ConvertFrom-Json } catch { exit 0 }
+
+$hookEvent = $d.hook_event_name
+$reason    = $d.reason
+$notifType = $d.notification_type
+$message   = $d.message
+$cwd       = $d.cwd
+
+$project = if ($cwd) { Split-Path -Leaf $cwd } else { 'Claude Code' }
+
+$BARK_URL = 'https://api.day.app/DEVICE-KEY/'
+
+$body = ''; $level = ''
+
+switch ($hookEvent) {
+  'Stop' {
+    $body  = "$([char]::ConvertFromUtf32(0x2705)) Claude Code 已完成"
+    $level = 'active'
+  }
+  'StopFailure' {
+    $body  = "$([char]::ConvertFromUtf32(0x274C)) Claude Code 出错"
+    $level = 'timeSensitive'
+  }
+  'SessionEnd' {
+    if ($reason -in @('clear','logout','prompt_input_exit')) { exit 0 }
+    $body  = "$([char]::ConvertFromUtf32(0x26A0))$([char]0xFE0F) Claude Code 会话异常结束"
+    $level = 'timeSensitive'
+  }
+  'Notification' {
+    if ($notifType) {
+      if ($notifType -in @('permission_prompt','elicitation_dialog')) {
+        $body  = "$([char]::ConvertFromUtf32(0x1F514)) Claude Code 等待操作"
+        $level = 'timeSensitive'
+      } else { exit 0 }
+    } else {
+      if ($message -match 'waiting for your input|idle') { exit 0 }
+      $body  = "$([char]::ConvertFromUtf32(0x1F514)) Claude Code 等待操作"
+      $level = 'timeSensitive'
+    }
+  }
+  default { exit 0 }
+}
+
+if (-not $body) { exit 0 }
+
+$t = [Uri]::EscapeDataString($project)
+$b = [Uri]::EscapeDataString($body)
+try {
+  Invoke-RestMethod -Uri "${BARK_URL}${t}/${b}?level=${level}&isArchive=1" -Method Get -TimeoutSec 10 | Out-Null
+} catch { }
+
+[Console]::Write([char]7)
+```
+
+## Encrypted Bark script pattern (macOS/Linux — bash)
 
 Encrypted mode follows the same event-type branching, but sends a ciphertext payload plus `iv`.
 
@@ -108,6 +261,38 @@ Script responsibilities:
 - encrypt with `AES-128-CBC`
 - base64 the ciphertext
 - send `ciphertext` and `iv` to the Bark push URL
+
+## Encrypted Bark script pattern (Windows — PowerShell)
+
+Same event-type branching as plain mode. Replace the HTTP send block with:
+
+```powershell
+$BARK_KEY = 'YOUR-16-CHAR-KEY'
+
+# Generate random 16-char IV from alphanumeric characters
+$chars = (48..57) + (65..90) + (97..122)
+$ivStr = -join (1..16 | ForEach-Object { [char](Get-Random -InputObject $chars) })
+
+$plainObj = [ordered]@{ title = $project; body = $body; group = 'Claude Code'; level = $level; isArchive = 1 }
+$plaintext = ConvertTo-Json $plainObj -Compress
+
+$aes = [System.Security.Cryptography.Aes]::Create()
+$aes.Mode    = [System.Security.Cryptography.CipherMode]::CBC
+$aes.Padding = [System.Security.Cryptography.PaddingMode]::PKCS7
+$aes.KeySize = 128
+$aes.Key     = [Text.Encoding]::UTF8.GetBytes($BARK_KEY)
+$aes.IV      = [Text.Encoding]::UTF8.GetBytes($ivStr)
+
+$enc          = $aes.CreateEncryptor()
+$plainBytes   = [Text.Encoding]::UTF8.GetBytes($plaintext)
+$cipherBytes  = $enc.TransformFinalBlock($plainBytes, 0, $plainBytes.Length)
+$ciphertext   = [Convert]::ToBase64String($cipherBytes)
+
+$jsonBody = ConvertTo-Json @{ ciphertext = $ciphertext; iv = $ivStr } -Compress
+try {
+  Invoke-RestMethod -Uri $BARK_URL -Method Post -Body $jsonBody -ContentType 'application/json' -TimeoutSec 10 | Out-Null
+} catch { }
+```
 
 ## Terminal bell for tmux / terminal notifications
 

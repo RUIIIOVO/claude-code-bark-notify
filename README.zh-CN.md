@@ -2,7 +2,7 @@
 
 # bark-notify
 
-一个 Claude Code 插件，通过 [Bark](https://github.com/Finb/Bark) 把 macOS 上的完成、出错、等待授权等事件推送到 iPhone。
+一个 Claude Code 插件（macOS / Linux / Windows），通过 [Bark](https://github.com/Finb/Bark) 把完成、出错、等待授权等事件推送到 iPhone。
 
 ## 我为什么做这个插件
 
@@ -17,7 +17,9 @@
 
 ## 前置条件
 
-- macOS 装好 Claude Code
+- macOS / Linux / Windows 装好 Claude Code
+  - macOS / Linux：自带 bash + `python3` + `curl`（macOS 自带；多数 Linux 发行版默认有）
+  - Windows：自带 PowerShell 5.1+（Windows 10/11 默认带）
 - iPhone 装好 [Bark](https://apps.apple.com/cn/app/bark-customed-notifications/id1403753865)，并拿到推送 URL（形如 `https://api.day.app/<你的设备key>`）
 
 ## 安装
@@ -86,7 +88,7 @@ tmux set -g visual-bell on
 
 - Bark URL 和加密密钥仅存在 `~/.claude/` 本地脚本里，除你自己的 Bark 服务器外不会发往任何地方。
 - Setup 是合并写入 `~/.claude/settings.json`，不会覆盖你已有的配置。
-- 加密模式下，推送正文在离开 Mac 之前已经过 AES-128-CBC 加密。
+- 加密模式下，推送正文在离开本机之前已经过 AES-128-CBC 加密。
 
 ---
 

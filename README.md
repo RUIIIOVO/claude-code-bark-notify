@@ -2,7 +2,7 @@
 
 # bark-notify
 
-A Claude Code plugin that pushes a notification to your iPhone via [Bark](https://github.com/Finb/Bark) when Claude Code finishes a turn, errors out, or asks for your approval.
+A Claude Code plugin (macOS / Linux / Windows) that pushes a notification to your iPhone via [Bark](https://github.com/Finb/Bark) when Claude Code finishes a turn, errors out, or asks for your approval.
 
 ## Why I built this
 
@@ -17,7 +17,9 @@ A Claude Code plugin that pushes a notification to your iPhone via [Bark](https:
 
 ## Requirements
 
-- macOS with Claude Code installed
+- macOS, Linux, or Windows with Claude Code installed
+  - macOS / Linux: bash + `python3` + `curl` (preinstalled on macOS; default on most Linux)
+  - Windows: PowerShell 5.1+ (preinstalled on Windows 10/11)
 - iPhone with the [Bark](https://apps.apple.com/app/bark-customed-notifications/id1403753865) app installed and a push URL ready (`https://api.day.app/<your-device-key>`)
 
 ## Install
@@ -86,7 +88,7 @@ Ask Claude in any session — the `bark-notify` plugin includes a guidance skill
 
 - Your Bark URL and encryption key are stored locally in `~/.claude/` and never sent anywhere except your Bark server.
 - Setup merges into your existing `~/.claude/settings.json` without overwriting other entries.
-- In encrypted mode, the notification body is AES-128-CBC encrypted before leaving your Mac.
+- In encrypted mode, the notification body is AES-128-CBC encrypted before leaving your machine.
 
 ---
 

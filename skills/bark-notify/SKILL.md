@@ -1,12 +1,11 @@
 ---
 name: bark-notify
-description: Use this skill whenever the user wants Claude Code on a Mac to notify an iPhone through Bark when a task, turn, or coding session finishes. Trigger on requests about Bark notifications, Claude completion alerts, iPhone push reminders, macOS to iPhone completion messages, Bark hook setup, or Bark troubleshooting, even if the user does not explicitly say skill or plugin.
-version: 0.2.0
+description: Use this skill whenever the user wants Claude Code to notify an iPhone through Bark when a task, turn, or coding session finishes. Works on macOS, Linux, and Windows. Trigger on requests about Bark notifications, Claude completion alerts, iPhone push reminders, completion messages, Bark hook setup, or Bark troubleshooting, even if the user does not explicitly say skill or plugin.
 ---
 
 # Bark Notify
 
-This skill helps users set up or troubleshoot Bark notifications for Claude Code completion events on macOS.
+This skill helps users set up or troubleshoot Bark notifications for Claude Code completion events on macOS, Linux, and Windows.
 
 ## Use this skill for
 
@@ -27,7 +26,7 @@ Prefer the lightest path that matches the user's intent.
 
 This plugin focuses on one concrete outcome:
 
-- macOS Claude Code session
+- Claude Code session on macOS, Linux, or Windows
 - Bark notification on iPhone
 - notification sent when Claude finishes a turn
 
@@ -40,5 +39,5 @@ The default notification should stay minimal for readability:
 Read these only when relevant:
 
 - `references/bark-prereqs.md` for Bark prerequisites and required user inputs
-- `references/config-patterns.md` for plain vs encrypted hook patterns
+- `references/config-patterns.md` for plain vs encrypted hook patterns (macOS/Linux bash and Windows PowerShell)
 - `references/troubleshooting.md` for failed delivery or decryption issues
